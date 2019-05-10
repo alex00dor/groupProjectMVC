@@ -5,13 +5,40 @@
     <meta name="viewport" content="width=device-width"/>
     <link rel="stylesheet" asp-href-include="/lib/bootstrap/dist/**/*.min.css"
           asp-href-exclude="**/*-reboot*,**/*-gird"/>
+    <script src="/lib/jquery/dist/jquery.min.js"></script>
+    <script src="/lib/jquery-validation/dist/jquery.validate.min.js"></script>
+    <script
+        src="/lib/jquery-validation-unobtrusive/jquery.validate.unobtrusive.min.js">
+    </script>
     <title>Real-time chat</title>
 </head>
 <body>
-<div class="navbar navbar-dark bg-dark" role="navigation">
+<nav class="navbar navbar-expand-lg navbar-dark bg-dark">
     <a class="navbar-brand" href="#">Chat</a>
+    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+        <span class="navbar-toggler-icon"></span>
+    </button>
 
-</div>
+    <div class="collapse navbar-collapse justify-content-end" id="navbarSupportedContent">
+        <ul class="navbar-nav">
+            @if (User.Identity.IsAuthenticated)
+            {
+                <li class="nav-item">
+                    <a asp-controller="Account" asp-action="Logout" class="btn btn-primary">Logout</a>
+                </li>
+            }
+            else
+            {
+                <li class="nav-item">
+                    <a asp-controller="Account" asp-action="Login" class="btn btn-primary">Sign in</a>
+                </li>
+                <li class="nav-item">
+                    <a asp-controller="Account" asp-action="Create" class="btn btn-primary ml-3">Sign up</a>
+                </li>
+            }
+        </ul>
+    </div>
+</nav>
 <div class="row m-1 p-1">
     <div class="col-9">
         @RenderBody()

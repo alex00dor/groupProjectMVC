@@ -12,4 +12,9 @@
         <PackageReference Include="Microsoft.EntityFrameworkCore.Sqlite" Version="2.2.4" />
     </ItemGroup>
 
+    <ItemGroup>
+      <Folder Include="Infrastructure" />
+      <Folder Include="Models\Repositories" />
+    </ItemGroup>
+
 </Project>
