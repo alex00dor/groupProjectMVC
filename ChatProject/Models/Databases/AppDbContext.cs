@@ -10,5 +10,8 @@ namespace ChatProject.Models.Databases
             : base(options)
         {
         }
+        
+        public DbSet<Room> Rooms { get; set; }
+        public DbSet<Message> Messages { get; set; }
     }
 }
