@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using ChatProject.Hubs;
 using ChatProject.Models.Databases;
 using ChatProject.Models.Entities;
 using Microsoft.AspNetCore.Builder;
@@ -39,6 +40,7 @@ namespace ChatProject
                 .AddDefaultTokenProviders();
 
             services.AddMvc();
+            services.AddSignalR();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -57,7 +59,12 @@ namespace ChatProject
             app.UseHttpsRedirection();
             app.UseAuthentication();
             app.UseStaticFiles();
+            app.UseCookiePolicy();
             app.UseMvcWithDefaultRoute();
+            app.UseSignalR(routes =>
+            {
+                routes.MapHub<ChatHub>("/chatHub");
+            });
         }
     }
 }
