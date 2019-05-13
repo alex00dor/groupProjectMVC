@@ -5,6 +5,7 @@ using System.Threading.Tasks;
 using ChatProject.Hubs;
 using ChatProject.Models.Databases;
 using ChatProject.Models.Entities;
+using ChatProject.Models.Repositories;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Http;
@@ -39,6 +40,7 @@ namespace ChatProject
                 .AddEntityFrameworkStores<AppDbContext>()
                 .AddDefaultTokenProviders();
 
+            services.AddTransient<IRoomRepository, RoomRepository>();
             services.AddMvc();
             services.AddSignalR();
         }

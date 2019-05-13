@@ -19,7 +19,7 @@ namespace ChatProject.Models.ViewModels
         public string Password { get; set; }
 
         [Required(ErrorMessage = "Please repeat a password")]
-        [Compare("Password", ErrorMessage = "Different passwords.")]
+        [Compare("Password", ErrorMessage = "Different passwords")]
         [Display(Name = "Repeat password")]
         public string Password2 { get; set; }
     }

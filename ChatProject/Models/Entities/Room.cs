@@ -7,9 +7,9 @@ namespace ChatProject.Models.Entities
     {
         public int Id { get; set; }
         public string Name { get; set; }
+        public virtual User Creator { get; set; }
         public bool Private { get; set; }
-        
-        public virtual ICollection<User> Users { get; set; }
-        public virtual ICollection<Message> Messages { get; set; }
+        public virtual List<RoomUser> RoomUsers { get; set; }
+        public virtual List<Message> Messages { get; set; }
     }
 }
