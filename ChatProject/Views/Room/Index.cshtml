@@ -1,12 +1,13 @@
 @using ChatProject.Models.Entities
 @model RoomsListModel
-
-<h3>List Of your rooms</h3>
-
+<h3>All rooms</h3>
+<div><a asp-action="List" class="btn btn-dark">Show my rooms</a></div>
 @foreach (Room room in Model.Rooms)
 {
    @Html.Partial("RoomSummary", room)
 }
+
+<div><a asp-action="Create" class="btn btn-outline-primary">Create a new room</a></div>
 
 <div page-model="@Model.PagingInfo" page-action="List" page-classes-enable="true"
      page-class="btn" page-class-normal="btn-secondary" 

@@ -5,10 +5,10 @@
     <meta name="viewport" content="width=device-width"/>
     <link rel="stylesheet" asp-href-include="/lib/bootstrap/dist/**/*.min.css"
           asp-href-exclude="**/*-reboot*,**/*-gird"/>
+    <link rel="stylesheet" asp-href-include="/css/*.css"/>
     <script src="/lib/jquery/dist/jquery.min.js"></script>
     <script src="/lib/jquery-validation/dist/jquery.validate.min.js"></script>
-    <script
-        src="/lib/jquery-validation-unobtrusive/jquery.validate.unobtrusive.min.js">
+    <script src="/lib/jquery-validation-unobtrusive/jquery.validate.unobtrusive.min.js">
     </script>
     <title>Real-time chat</title>
 </head>
@@ -18,6 +18,22 @@
     <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
         <span class="navbar-toggler-icon"></span>
     </button>
+    @if (User.Identity.IsAuthenticated)
+    {
+        <div class="collapse navbar-collapse" id="navbarNav">
+            <ul class="navbar-nav">
+                <li class="nav-item">
+                    <a class="nav-link" asp-action="Index" asp-controller="Room">Show all rooms</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" asp-action="List" asp-controller="Room">Show my rooms</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" asp-action="Create" asp-controller="Room">Create a new room</a>
+                </li>
+            </ul>
+        </div>
+    }
 
     <div class="collapse navbar-collapse justify-content-end" id="navbarSupportedContent">
         <ul class="navbar-nav">

@@ -1,0 +1,18 @@
+@using ChatProject.Models.Entities
+@model RoomModel
+
+<h3>Chat name: @Model.Room.Name</h3>
+<div><a asp-action="Leave" asp-route-roomId="@Model.Room.Id" class="btn btn-danger">Leave</a></div>
+<div class="container">
+    @foreach (Message msg in Model.Room.Messages)
+    {
+        <div>@msg.User.UserName : @msg.Text</div>
+    }
+</div>
+
+<form asp-action="Room" method="post">
+    <label>Text:</label>
+    <input name="roomId" value="@Model.Room.Id" type="hidden"/>
+    <input name="text" class="form-control"/>
+    <input value="Send" class="btn btn-primary" type="submit"/>
+</form>

@@ -33,9 +33,9 @@ namespace ChatProject
             services.AddIdentity<User, IdentityRole>(opts =>
                 {
                     opts.User.RequireUniqueEmail = true;
-                    opts.Password.RequireDigit = true;
+                    opts.Password.RequireDigit = false;
                     opts.Password.RequiredLength = 6;
-                    opts.Password.RequireNonAlphanumeric = true;
+                    opts.Password.RequireNonAlphanumeric = false;
                 })
                 .AddEntityFrameworkStores<AppDbContext>()
                 .AddDefaultTokenProviders();

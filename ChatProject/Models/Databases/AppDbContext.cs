@@ -1,7 +1,9 @@
+using System;
 using ChatProject.Models.Entities;
 using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Query.Internal;
+using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 namespace ChatProject.Models.Databases
 {
@@ -11,13 +13,12 @@ namespace ChatProject.Models.Databases
             : base(options)
         {
         }
-
         protected override void OnModelCreating(ModelBuilder builder)
         {
             base.OnModelCreating(builder);
 
-            builder.Entity<RoomUser>()
-                .HasKey(t => new {t.UserId, t.RoomId});
+//            builder.Entity<RoomUser>()
+//                .HasKey(t => new {t.UserId, t.RoomId});
 
             builder.Entity<RoomUser>()
                 .HasOne(pt => pt.User)
@@ -29,7 +30,7 @@ namespace ChatProject.Models.Databases
                 .WithMany(t => t.RoomUsers)
                 .HasForeignKey(pt => pt.RoomId);
 
-            builder.Entity<Message>().HasKey(t => new {t.UserId, t.RoomId});
+            //builder.Entity<Message>().HasKey(t => new {t.UserId, t.RoomId});
 
             builder.Entity<Message>()
                 .HasOne(pt => pt.User)
@@ -40,6 +41,18 @@ namespace ChatProject.Models.Databases
                 .HasOne(pt => pt.Room)
                 .WithMany(p => p.Messages)
                 .HasForeignKey(pt => pt.RoomId);
+            
+            var dateTimeConverter = new ValueConverter<DateTime, DateTime>(
+                v => v, v => DateTime.SpecifyKind(v, DateTimeKind.Utc));
+            
+            foreach (var entityType in builder.Model.GetEntityTypes())
+            {
+                foreach (var property in entityType.GetProperties())
+                {
+                    if (property.ClrType == typeof(DateTime) || property.ClrType == typeof(DateTime?))
+                        property.SetValueConverter(dateTimeConverter);
+                }
+            }
         }
 
 

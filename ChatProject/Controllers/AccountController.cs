@@ -79,7 +79,7 @@ namespace ChatProject.Controllers
         }
         
         [Authorize]
-        [Route("logout")]
+        [Route("Logout")]
         public async Task<RedirectResult> Logout(string returnUrl = "/")
         {
             await _signInManager.SignOutAsync();
