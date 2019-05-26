@@ -30,7 +30,10 @@ namespace ChatProject.Controllers
         {
             return View(new RoomsListModel
             {
-                Rooms = _repository.Rooms,
+                Rooms = _repository.Rooms
+                    .OrderBy(r => r.Name)
+                    .Skip((page - 1) * PAGE_SIZE)
+                    .Take(PAGE_SIZE),
                 PagingInfo = new PagingInfo
                 {
                     CurrentPage = page,
@@ -49,31 +52,12 @@ namespace ChatProject.Controllers
             Room room = _repository.GetRoom(roomId, user);
             return View(new RoomModel
             {
-                Room = room
+                Room = room,
+                CurrentUserId = user.Id,
+                UserRooms = _repository
+                    .GetAllRoomsByUser(user)
+                    .OrderBy(r => r.Name)
             });
-        }
-
-        //Temporary action
-        [HttpPost("Room")]
-        public async Task<IActionResult> Room(int roomId, string text)
-        {
-            User user = await CurrentUser;
-            if (user != null && text != null && text.Trim() != "")
-            {
-                Message message = new Message
-                {
-                    User = user,
-                    Room = _repository.GetRoom(roomId, user),
-                    Text = text.Trim(),
-                    DateTime = DateTime.Now
-                };
-
-                _repository.SendMessageToRoom(roomId, user, message);
-
-                return RedirectToAction("Room", new {roomId});
-            }
-
-            return Redirect("/Error");
         }
 
         [Route("/Room/Enter")]

@@ -1,16 +1,15 @@
 @using ChatProject.Models.Entities
 @model RoomsListModel
 
-<h3>List Of your rooms</h3>
-
-@foreach (Room room in Model.Rooms)
-{
-   @Html.Partial("RoomSummary", room)
-}
-
+<div class="d-flex flex-wrap justify-content-center pt-5">
+    @foreach (Room room in Model.Rooms)
+    {
+        @Html.Partial("RoomSummary", room)
+    }
+</div>
 <div page-model="@Model.PagingInfo" page-action="List" page-classes-enable="true"
-     page-class="btn" page-class-normal="btn-secondary" 
+     page-class="btn" page-class-normal="btn-secondary"
      page-class-selected="btn-primary"
      class="btn-group float-right m-1">
-    
+
 </div>

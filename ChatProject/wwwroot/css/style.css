@@ -1,0 +1,99 @@
+body, html {
+    position: relative;
+    height: 100%;
+    width: 100%;
+    margin: 0;
+    padding: 0;
+}
+
+.footer {
+    background-color: #f5f5f5;
+}
+
+
+.sidebar {
+    position: fixed;
+    top: 0;
+    bottom: 0;
+    left: 0;
+    margin: 0;
+    padding: 48px 0 56px;
+    overflow-y: scroll;
+}
+
+.message-header {
+    z-index: 5;
+    top: 48px;
+}
+
+.message-box {
+    height: 100%;
+    overflow-x: hidden;
+    overflow-y: scroll;
+    padding-right: 15px;
+    padding-left: 15px;
+    margin-right: auto;
+    margin-left: auto;
+    margin-bottom: -72px;
+    padding-bottom: 90px;
+}
+
+.message {
+    padding: 7px;
+    color: white;
+    background-color: darkcyan;
+    border-radius: 5px;
+}
+
+.message-sender {
+    background-color: mediumpurple;
+}
+
+.message-date {
+    color: gray;
+    font-size: x-small;
+    margin: 0;
+    padding: 0;
+    float: right;
+}
+
+.message-input-box {
+    background-color: white;
+    z-index: 5;
+    bottom: 56px;
+    border-radius: 0;
+}
+
+.message-input{
+    border-radius: 0;
+    width: auto;
+}
+
+.message-input:focus{
+    -webkit-box-shadow: none;
+    box-shadow: none;
+}
+
+.message-input-btn{
+    border-radius: 0;
+}
+
+.btn-sidebar-group {
+    width: 100%;
+    color: #ffffff;
+}
+
+.btn-sidebar {
+    text-align: left;
+    color: #ffffff;
+    border-radius: 0;
+}
+
+.content {
+    padding: 48px 0 56px;
+}
+
+
+code {
+    font-size: 80%;
+}

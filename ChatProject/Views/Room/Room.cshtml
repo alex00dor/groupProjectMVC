@@ -1,18 +1,119 @@
 @using ChatProject.Models.Entities
 @model RoomModel
+<div class="row h-100">
+    <nav class="col-md-3 col-lg-2 d-none d-md-block bg-light shadow-sm sidebar">
+        <div class="pt-2">
+            <div class="btn-group-vertical btn-sidebar-group" role="group">
+                @foreach (Room room in Model.UserRooms)
+                {
+                    <a asp-action="Room" asp-route-roomId="@room.Id" class="btn @((room.Id == Model.Room.Id) ? "btn-primary" : "btn-secondary") btn-sidebar shadow">@room.Name</a>
+                }
 
-<h3>Chat name: @Model.Room.Name</h3>
-<div><a asp-action="Leave" asp-route-roomId="@Model.Room.Id" class="btn btn-danger">Leave</a></div>
-<div class="container">
-    @foreach (Message msg in Model.Room.Messages)
-    {
-        <div>@msg.User.UserName : @msg.Text</div>
-    }
+            </div>
+        </div>
+    </nav>
+    <div class="col-md-9 ml-sm-auto col-lg-10 content pt-0">
+        <div class="card shadow position-sticky message-header">
+            <div class="card-body d-flex flex-row justify-content-between pb-3">
+                <h3>@Model.Room.Name</h3>
+                <a asp-controller="Room" asp-action="Leave" asp-route-roomId="@Model.Room.Id" class="btn-danger btn">Leave</a>
+            </div>
+        </div>
+        <div class="pt-5 message-box" id="messages">
+            @foreach (Message msg in Model.Room.Messages)
+            {
+                <div class="row">
+                    <div class="col-12 px-4 pt-2">
+                        <div class="@((msg.UserId == Model.CurrentUserId) ? "float-right" : "float-left")">
+                            <div class="message @((msg.UserId == Model.CurrentUserId) ? "message-sender" : "")">
+                                <span class="badge badge-pill badge-light float-left">@msg.User.UserName:</span><br>
+                                @msg.Text
+                            </div>
+                            <div class="message-date">@msg.DateTime</div>
+                        </div>
+                    </div>
+                </div>
+            }
+        </div>
+        <div class="shadow position-sticky message-input-box">
+            <div class="container-fluid">
+                <div class="row">
+                    <div class="col-12 p-0">
+                        <div class="input-group input-group-lg">
+                                <label class="sr-only" for="messageText">Message</label>
+                                <input id="messageText" name="text" type="text" class="form-control message-input" placeholder="Message...">
+                                <button id="sendButton" type="submit" class="btn btn-dark message-input-btn">Submit</button>
+                            </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
 </div>
 
-<form asp-action="Room" method="post">
-    <label>Text:</label>
-    <input name="roomId" value="@Model.Room.Id" type="hidden"/>
-    <input name="text" class="form-control"/>
-    <input value="Send" class="btn btn-primary" type="submit"/>
-</form>
+<script type="text/javascript">
+        function Scrolldown() {
+            window.scrollTo(0, document.body.scrollHeight);
+        }
+        
+        Scrolldown();
+        
+        $(document).ready(function(){
+            $('#sendButton').attr('disabled',true);
+            $('#messageText').keyup(function(){
+                if($(this).val().length !== 0)
+                    $('#sendButton').attr('disabled', false);            
+                else
+                    $('#sendButton').attr('disabled',true);
+            })
+        });
+        var currentUserId = '@Model.CurrentUserId';
+        var roomId = '@Model.Room.Id';
+        var connection = new signalR.HubConnectionBuilder().withUrl("/chatHub").build();
+        
+        connection.start().then(function(){
+            connection.invoke("JoinGroup", roomId).catch(function (err) {
+                    return console.error(err.toString());
+                });
+        }).catch(function (err) {
+            return console.error(err.toString());
+        });
+
+        
+        connection.on("chat", function (userName, message, date, userId) {
+            appendLine(userName, message, date, userId === currentUserId);
+            Scrolldown();
+        });
+        
+        function appendLine(userName, message, date, sender) {  
+                var appendHtml = '<div class="row"><div class="col-12 px-4 pt-2">' +
+                 '<div class="float-left">' +
+                  '<div class="message">' +
+                   '<span class="badge badge-pill badge-light float-left">'+userName+':</span>' +
+                    '<br>'+message+'</div><div class="message-date">'+date+'</div>' +
+                   '</div>' +
+                  '</div></div>';     
+                var appendHtmlSender = '<div class="row"><div class="col-12 px-4 pt-2">' +
+                                                        '<div class="float-right">' +
+                                                         '<div class="message message-sender">' +
+                                                          '<span class="badge badge-pill badge-light float-left">'+userName+':</span>' +
+                                                           '<br>'+message+'</div><div class="message-date">'+date+'</div>' +
+                                                          '</div>' +
+                                                         '</div></div>';     
+                if(sender){
+                    $('#messages').append(appendHtmlSender);
+                }else{
+                    $('#messages').append(appendHtml);
+                }
+            };
+
+        document.getElementById("sendButton").addEventListener("click", function (event) {
+            var message = document.getElementById("messageText").value;
+            document.getElementById("messageText").value = '';
+            $('#sendButton').attr('disabled',true);
+            connection.invoke("SendMessage", roomId, message).catch(function (err) {
+                return console.error(err.toString());
+            });
+            event.preventDefault();
+        });
+</script>

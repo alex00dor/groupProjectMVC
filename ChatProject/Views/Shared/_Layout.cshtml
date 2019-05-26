@@ -8,57 +8,59 @@
     <link rel="stylesheet" asp-href-include="/css/*.css"/>
     <script src="/lib/jquery/dist/jquery.min.js"></script>
     <script src="/lib/jquery-validation/dist/jquery.validate.min.js"></script>
-    <script src="/lib/jquery-validation-unobtrusive/jquery.validate.unobtrusive.min.js">
-    </script>
+    <script src="/lib/jquery-validation-unobtrusive/jquery.validate.unobtrusive.min.js"></script>
+    <script src="/lib/bootstrap/dist/js/bootstrap.min.js"></script>
+    <script src="/js/signalr.min.js"></script>
     <title>Real-time chat</title>
 </head>
 <body>
-<nav class="navbar navbar-expand-lg navbar-dark bg-dark">
-    <a class="navbar-brand" href="#">Chat</a>
-    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
-        <span class="navbar-toggler-icon"></span>
-    </button>
-    @if (User.Identity.IsAuthenticated)
-    {
-        <div class="collapse navbar-collapse" id="navbarNav">
+<header>
+    <!-- Fixed navbar -->
+    <nav class="navbar navbar-expand-md navbar-dark fixed-top bg-dark shadow py-lg-2 py-md-0">
+        <a class="navbar-brand" href="#">Chat</a>
+        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent"
+                aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse justify-content-end" id="navbarSupportedContent">
             <ul class="navbar-nav">
-                <li class="nav-item">
-                    <a class="nav-link" asp-action="Index" asp-controller="Room">Show all rooms</a>
-                </li>
-                <li class="nav-item">
-                    <a class="nav-link" asp-action="List" asp-controller="Room">Show my rooms</a>
-                </li>
-                <li class="nav-item">
-                    <a class="nav-link" asp-action="Create" asp-controller="Room">Create a new room</a>
-                </li>
+                @if (User.Identity.IsAuthenticated)
+                {
+                    <li class="nav-item">
+                        <a class="nav-link" asp-controller="Room" asp-action="Index">Show all rooms</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" asp-controller="Room" asp-action="List">Show my rooms</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" asp-controller="Room" asp-action="Create">Create a new room</a>
+                    </li>
+                }
             </ul>
+            <div class="d-inline-block my-2 my-lg-0">
+                @if (User.Identity.IsAuthenticated)
+                {
+                    <a asp-controller="Account" asp-action="Logout" class="btn btn-outline-primary my-2 my-sm-0">Sign out</a>
+                }
+                else
+                {
+                    <a asp-controller="Account" asp-action="Login" class="btn btn-outline-primary my-2 my-sm-0">Sign in</a>
+                    <a asp-controller="Account" asp-action="Create" class="btn btn-outline-primary my-2 my-sm-0">Sign up</a>
+                }
+            </div>
         </div>
-    }
 
-    <div class="collapse navbar-collapse justify-content-end" id="navbarSupportedContent">
-        <ul class="navbar-nav">
-            @if (User.Identity.IsAuthenticated)
-            {
-                <li class="nav-item">
-                    <a asp-controller="Account" asp-action="Logout" class="btn btn-primary">Logout</a>
-                </li>
-            }
-            else
-            {
-                <li class="nav-item">
-                    <a asp-controller="Account" asp-action="Login" class="btn btn-primary">Sign in</a>
-                </li>
-                <li class="nav-item">
-                    <a asp-controller="Account" asp-action="Create" class="btn btn-primary ml-3">Sign up</a>
-                </li>
-            }
-        </ul>
-    </div>
-</nav>
-<div class="row m-1 p-1">
-    <div class="col-9">
-        @RenderBody()
-    </div>
+    </nav>
+</header>
+<div class="container-fluid pt-5 h-100">
+    @RenderBody()
 </div>
+
+<footer class="footer mt-auto py-3 fixed-bottom shadow">
+    <div class="container">
+        <span class="text-muted">MVC Project at RTC 2019</span>
+    </div>
+</footer>
+
 </body>
 </html>

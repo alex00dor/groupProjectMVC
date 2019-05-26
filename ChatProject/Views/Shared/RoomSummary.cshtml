@@ -1,6 +1,13 @@
 @model ChatProject.Models.Entities.Room
 
-<div class="card border-primary m-1 p-1">
-    <div class="card-text p-1">@Model.Name</div>
-    <a asp-controller="Room" asp-action="Enter" asp-route-roomId="@Model.Id" class="btn btn-primary btn-sm">Go to chat</a>
+<div class="card m-2" style="width: 18rem;">
+    <div class="card-header">
+        @Model.Name
+    </div>
+    <ul class="list-group list-group-flush">
+        <li class="list-group-item">Users in the room: @Model.RoomUsers.Count</li>
+        <li class="list-group-item">
+            <a asp-controller="Room" asp-action="Enter" asp-route-roomId="@Model.Id" class="btn btn-outline-success float-right">Go to chat</a>
+        </li>
+    </ul>
 </div>

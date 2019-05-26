@@ -13,7 +13,7 @@ namespace ChatProject.Models.Repositories
         void SendMessageToRoom(int roomId, User user, Message message);
         void AddUserToRoom(int roomId, User user);
         IQueryable<Room> GetAllRoomsByUser(User user);
-
+        bool isUserInRoom(int roomId, string userId);
         bool isNameUniq(string name);
     }
 }

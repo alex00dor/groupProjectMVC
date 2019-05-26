@@ -115,7 +115,15 @@ namespace ChatProject.Models.Repositories
 
         public IQueryable<Room> GetAllRoomsByUser(User user)
         {
-            return _context.Rooms.Where(r => r.RoomUsers.FirstOrDefault(ru => ru.User == user) != null);
+            return Rooms.Where(r => r.RoomUsers.FirstOrDefault(ru => ru.User == user) != null);
+        }
+
+        public bool isUserInRoom(int roomId, string userId)
+        {
+            Room dbEntry = Rooms.FirstOrDefault(r => r.Id == roomId);
+            if (dbEntry == null)
+                return false;
+            return dbEntry.RoomUsers.FirstOrDefault(u => u.RoomId == roomId && u.UserId == userId) != null;
         }
 
         public bool isNameUniq(string name)

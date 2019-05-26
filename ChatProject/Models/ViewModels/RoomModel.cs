@@ -7,5 +7,8 @@ namespace ChatProject.Models.ViewModels
     {
         public List<User> Users { get; set; }
         public Room Room { get; set; }
+        
+        public IEnumerable<Room> UserRooms { get; set; }
+        public string CurrentUserId { get; set; }
     }
 }
