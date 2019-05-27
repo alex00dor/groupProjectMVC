@@ -1,12 +1,15 @@
 @model CreateRoomModel
 
-<h3>Create new room</h3>
-<div asp-validation-summary="All" class="text-danger"></div>
-<form asp-action="Create" method="post">
-    <div class="form-group">
-        <label asp-for="Name"></label>
-        <div><span asp-validation-for="Name" class="text-danger"></span></div>
-        <input asp-for="Name" class="form-control" />
+<div class="card shadow mt-5 mx-5">
+    <div class="card-header"><h4>Create a new room</h4></div>
+    <div class="card-body">
+        <form asp-action="Create" method="post">
+            <div class="form-group">
+                <label asp-for="Name"></label>
+                <input asp-for="Name" class="form-control" />
+            </div>
+            <div asp-validation-summary="All" class="text-danger"></div>
+            <button type="submit" class="btn btn-primary float-right">Create</button>
+        </form>
     </div>
-    <button type="submit" class="btn btn-primary">Create</button>
-</form>
+</div>
