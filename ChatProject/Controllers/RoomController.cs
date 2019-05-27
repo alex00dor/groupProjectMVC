@@ -60,7 +60,7 @@ namespace ChatProject.Controllers
             });
         }
 
-        [Route("/Room/Enter")]
+        [Route("Room/Enter")]
         public async Task<IActionResult> Enter(int roomId)
         {
             User user = await CurrentUser;
@@ -70,7 +70,7 @@ namespace ChatProject.Controllers
             return RedirectToAction("Room", new {roomId});
         }
 
-        [Route("/Room/Leave")]
+        [Route("Room/Leave")]
         public async Task<IActionResult> Leave(int roomId)
         {
             User user = await CurrentUser;
@@ -106,13 +106,13 @@ namespace ChatProject.Controllers
             );
         }
 
-        [HttpGet("/Room/Create")]
+        [HttpGet("Room/Create")]
         public IActionResult Create()
         {
             return View(new CreateRoomModel());
         }
 
-        [HttpPost("/Room/Create")]
+        [HttpPost("Room/Create")]
         public async Task<IActionResult> Create(CreateRoomModel model)
         {
             User user = await CurrentUser;
@@ -144,7 +144,7 @@ namespace ChatProject.Controllers
 //            
 //        }
 
-        [Route("/Room/Create/Success")]
+        [Route("Room/Create/Success")]
         public IActionResult CreateSuccess()
         {
             return View();

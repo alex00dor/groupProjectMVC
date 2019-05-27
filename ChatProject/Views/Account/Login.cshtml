@@ -1,17 +1,67 @@
 @model LoginModel
+@{
+    Layout = null;
+}
 
-<div class="text-danger" asp-validation-summary="All"></div>
-<form asp-action="Login" method="post">
-    <input type="hidden" name="returnUrl" value="@ViewBag.returnUrl" />
-    <div class="form-group">
-        <label asp-for="Email"></label>
-        <div><span asp-validation-for="Email" class="text-danger"></span></div>
-        <input asp-for="Email" class="form-control" />
+<html>
+<head>
+    <meta name="viewport" content="width=device-width"/>
+    <link rel="stylesheet" asp-href-include="/lib/bootstrap/dist/**/*.min.css"
+          asp-href-exclude="**/*-reboot*,**/*-gird"/>
+    <link rel="stylesheet" asp-href-include="/css/*.css"/>
+    <link rel="stylesheet" href="/lib/fontawesome/css/all.css"/>
+    <link rel="stylesheet" href="/css/style.css"/>
+    <script src="/lib/jquery/dist/jquery.min.js"></script>
+    <script src="/lib/jquery-validation/dist/jquery.validate.min.js"></script>
+    <script src="/lib/jquery-validation-unobtrusive/jquery.validate.unobtrusive.min.js"></script>
+    <script src="/lib/bootstrap/dist/js/bootstrap.min.js"></script>
+    <script src="/js/signalr.min.js"></script>
+    <title>Real-time chat - Sign In</title>
+</head>
+<body class="bg-dark">
+<div class="container pt-5">
+    <div class="card shadow">
+        <div class="card-header">
+            <h5>Sign in to continue</h5>
+        </div>
+        <div class="card-body pt-3 px-5">
+            <form asp-action="Login" method="post">
+                <input type="hidden" name="returnUrl" value="@ViewBag.returnUrl"/>
+                <div class="form-group">
+                    <label asp-for="Email"></label>
+                    <div class="input-group">
+                        <div class="input-group-prepend">
+                            <span class="input-group-text">
+                                <i class="fa fa-user"></i>
+                            </span>
+                        </div>
+                        <input asp-for="Email" class="form-control" placeholder="Email" type="email">
+                    </div>
+                    <div>
+                        <span asp-validation-for="Email" class="text-danger"></span>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label asp-for="Password"></label>
+                    <div class="input-group">
+                        <div class="input-group-prepend">
+                            <span class="input-group-text">
+                                <i class="fa fa-lock"></i>
+                            </span>
+                        </div>
+                        <input asp-for="Password" class="form-control" placeholder="******" type="password">
+                    </div>
+                    <div>
+                        <span asp-validation-for="Password" class="text-danger"></span>
+                    </div>
+                </div>
+                <a href="#">Forgot password?</a>
+                <button class="btn btn-outline-primary float-right" type="submit">Login</button>
+            </form>
+            <hr class="hr-text" data-content="OR">
+            <div class="text-center"> <a asp-action="Create" asp-controller="Account">Create a new account</a></div>
+        </div>
     </div>
-    <div class="form-group">
-        <label asp-for="Password"></label>
-        <div><span asp-validation-for="Password" class="text-danger"></span></div>
-        <input asp-for="Password" class="form-control" />
-    </div>
-    <button class="btn btn-primary" type="submit">Log In</button>
-</form>
+
+</div>
+</body>

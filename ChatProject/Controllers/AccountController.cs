@@ -73,7 +73,7 @@ namespace ChatProject.Controllers
                         return Redirect(returnUrl ?? "/");
                     }
                 }
-                ModelState.AddModelError(nameof(LoginModel.Email), "Invalid user or password");
+                ModelState.AddModelError(nameof(LoginModel.Email), "Invalid email or password");
             }
             return View(details);
         }
