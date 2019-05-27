@@ -1,26 +1,132 @@
 @model CreateUserModel
+@{
+    Layout = null;
+}
 
-<div asp-validation-summary="All" class="text-danger"></div>
-<form asp-action="Create" method="post">
-    <div class="form-group">
-        <label asp-for="Name"></label>
-        <div><span asp-validation-for="Name" class="text-danger"></span></div>
-        <input asp-for="Name" class="form-control" />
+<html>
+<head>
+    <meta name="viewport" content="width=device-width"/>
+    <link rel="stylesheet" asp-href-include="/lib/bootstrap/dist/**/*.min.css"
+          asp-href-exclude="**/*-reboot*,**/*-gird"/>
+    <link rel="stylesheet" asp-href-include="/css/*.css"/>
+    <link rel="stylesheet" href="/lib/fontawesome/css/all.css"/>
+    <link rel="stylesheet" href="/css/style.css"/>
+    <script src="/lib/jquery/dist/jquery.min.js"></script>
+    <script src="/lib/jquery-validation/dist/jquery.validate.min.js"></script>
+    <script src="/lib/jquery-validation-unobtrusive/jquery.validate.unobtrusive.min.js"></script>
+    <script src="/lib/bootstrap/dist/js/bootstrap.min.js"></script>
+    <script src="/js/signalr.min.js"></script>
+    <title>Real-time chat - Sign Up</title>
+</head>
+<body class="bg-dark">
+<div class="container pt-5">
+    <div class="card shadow">
+        <div class="card-header">
+            <h5>Sign up to continue</h5>
+        </div>
+        <div class="card-body pt-3 px-5">
+            <form asp-action="Create" method="post">
+                <div class="form-group">
+                    <label asp-for="Name"></label>
+                    <div class="input-group">
+                        <div class="input-group-prepend">
+                            <span class="input-group-text">
+                                <i class="fa fa-user"></i>
+                            </span>
+                        </div>
+                        <input asp-for="Name" class="form-control" placeholder="Name">
+                    </div>
+                    <div>
+                        <span asp-validation-for="Name" class="text-danger"></span>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label asp-for="Email"></label>
+                    <div class="input-group">
+                        <div class="input-group-prepend">
+                            <span class="input-group-text">
+                                <i class="fa fa-address-book"></i>
+                            </span>
+                        </div>
+                        <input asp-for="Email" class="form-control" placeholder="Email" type="email">
+                    </div>
+                    <div>
+                        <span asp-validation-for="Email" class="text-danger"></span>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label asp-for="Password"></label>
+                    <div class="input-group">
+                        <div class="input-group-prepend">
+                            <span class="input-group-text">
+                                <i class="fa fa-lock"></i>
+                            </span>
+                        </div>
+                        <input asp-for="Password" class="form-control" placeholder="******" type="password">
+                    </div>
+                    <div>
+                        <span asp-validation-for="Password" class="text-danger"></span>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label asp-for="Password2"></label>
+                    <div class="input-group">
+                        <div class="input-group-prepend">
+                            <span class="input-group-text">
+                                <i class="fa fa-lock"></i>
+                            </span>
+                        </div>
+                        <input asp-for="Password2" class="form-control" placeholder="******" type="password">
+                    </div>
+                    <div>
+                        <span asp-validation-for="Password2" class="text-danger"></span>
+                    </div>
+                </div>
+                <button class="btn btn-outline-primary float-right" type="submit">Create</button>
+            </form>
+            <div class="clearfix"></div>
+            <div asp-validation-summary="All" class="text-danger"></div>
+            <hr class="hr-text" data-content="OR">
+            <div class="text-center">
+                <a asp-action="Login" asp-controller="Account">Sign In</a>
+            </div>
+        </div>
     </div>
-    <div class="form-group">
-        <label asp-for="Email"></label>
-        <div><span asp-validation-for="Email" class="text-danger"></span></div>
-        <input type="email" asp-for="Email" class="form-control" />
-    </div>
-    <div class="form-group">
-        <label asp-for="Password"></label>
-        <div><span asp-validation-for="Password" class="text-danger"></span></div>
-        <input type="password" asp-for="Password" class="form-control" />
-    </div>
-    <div class="form-group">
-        <label asp-for="Password2"></label>
-        <div><span asp-validation-for="Password2" class="text-danger"></span></div>
-        <input type="password" asp-for="Password2" class="form-control" />
-    </div>
-    <button type="submit" class="btn btn-primary">Create</button>
-</form>
+
+</div>
+</body>
+
+@* *@
+@* //old style *@
+@* <div asp-validation-summary="All" class="text-danger"></div> *@
+@* <form asp-action="Create" method="post"> *@
+@*     <div class="form-group"> *@
+@*         <label asp-for="Name"></label> *@
+@*         <div> *@
+@*             <span asp-validation-for="Name" class="text-danger"></span> *@
+@*         </div> *@
+@*         <input asp-for="Name" class="form-control"/> *@
+@*     </div> *@
+@*     <div class="form-group"> *@
+@*         <label asp-for="Email"></label> *@
+@*         <div> *@
+@*             <span asp-validation-for="Email" class="text-danger"></span> *@
+@*         </div> *@
+@*         <input type="email" asp-for="Email" class="form-control"/> *@
+@*     </div> *@
+@*     <div class="form-group"> *@
+@*         <label asp-for="Password"></label> *@
+@*         <div> *@
+@*             <span asp-validation-for="Password" class="text-danger"></span> *@
+@*         </div> *@
+@*         <input type="password" asp-for="Password" class="form-control"/> *@
+@*     </div> *@
+@*     <div class="form-group"> *@
+@*         <label asp-for="Password2"></label> *@
+@*         <div> *@
+@*             <span asp-validation-for="Password2" class="text-danger"></span> *@
+@*         </div> *@
+@*         <input type="password" asp-for="Password2" class="form-control"/> *@
+@*     </div> *@
+@*     <button type="submit" class="btn btn-primary">Create</button> *@
+@* </form> *@
