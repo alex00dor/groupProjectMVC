@@ -40,10 +40,10 @@
                 <div class="row">
                     <div class="col-12 p-0">
                         <div class="input-group input-group-lg">
-                                <label class="sr-only" for="messageText">Message</label>
-                                <input id="messageText" name="text" type="text" class="form-control message-input" placeholder="Message...">
-                                <button id="sendButton" type="submit" class="btn btn-dark message-input-btn">Submit</button>
-                            </div>
+                            <label class="sr-only" for="messageText">Message</label>
+                            <input id="messageText" name="text" type="text" class="form-control message-input" placeholder="Message...">
+                            <button id="sendButton" type="submit" class="btn btn-dark message-input-btn">Submit</button>
+                        </div>
                     </div>
                 </div>
             </div>
@@ -51,69 +51,69 @@
     </div>
 </div>
 
-<script type="text/javascript">
-        function Scrolldown() {
-            window.scrollTo(0, document.body.scrollHeight);
-        }
-        
-        Scrolldown();
-        
-        $(document).ready(function(){
-            $('#sendButton').attr('disabled',true);
-            $('#messageText').keyup(function(){
-                if($(this).val().length !== 0)
-                    $('#sendButton').attr('disabled', false);            
-                else
-                    $('#sendButton').attr('disabled',true);
-            })
-        });
-        var currentUserId = '@Model.CurrentUserId';
-        var roomId = '@Model.Room.Id';
-        var connection = new signalR.HubConnectionBuilder().withUrl("/chatHub").build();
-        
-        connection.start().then(function(){
-            connection.invoke("JoinGroup", roomId).catch(function (err) {
-                    return console.error(err.toString());
-                });
-        }).catch(function (err) {
-            return console.error(err.toString());
-        });
+<script>
+function Scrolldown() {
+    window.scrollTo(0, document.body.scrollHeight);
+}
 
-        
-        connection.on("chat", function (userName, message, date, userId) {
-            appendLine(userName, message, date, userId === currentUserId);
-            Scrolldown();
-        });
-        
-        function appendLine(userName, message, date, sender) {  
-                var appendHtml = '<div class="row"><div class="col-12 px-4 pt-2">' +
-                 '<div class="float-left">' +
-                  '<div class="message">' +
-                   '<span class="badge badge-pill badge-light float-left">'+userName+':</span>' +
-                    '<br>'+message+'</div><div class="message-date">'+date+'</div>' +
-                   '</div>' +
-                  '</div></div>';     
-                var appendHtmlSender = '<div class="row"><div class="col-12 px-4 pt-2">' +
-                                                        '<div class="float-right">' +
-                                                         '<div class="message message-sender">' +
-                                                          '<span class="badge badge-pill badge-light float-left">'+userName+':</span>' +
-                                                           '<br>'+message+'</div><div class="message-date">'+date+'</div>' +
-                                                          '</div>' +
-                                                         '</div></div>';     
-                if(sender){
-                    $('#messages').append(appendHtmlSender);
-                }else{
-                    $('#messages').append(appendHtml);
-                }
-            };
+Scrolldown();
 
-        document.getElementById("sendButton").addEventListener("click", function (event) {
-            var message = document.getElementById("messageText").value;
-            document.getElementById("messageText").value = '';
+$(document).ready(function(){
+    $('#sendButton').attr('disabled',true);
+    $('#messageText').keyup(function(){
+        if($(this).val().length !== 0)
+            $('#sendButton').attr('disabled', false);
+        else
             $('#sendButton').attr('disabled',true);
-            connection.invoke("SendMessage", roomId, message).catch(function (err) {
-                return console.error(err.toString());
-            });
-            event.preventDefault();
-        });
+    })
+});
+var currentUserId = '@Model.CurrentUserId';
+var roomId = '@Model.Room.Id';
+var connection = new signalR.HubConnectionBuilder().withUrl("/chatHub").build();
+
+connection.start().then(function(){
+    connection.invoke("JoinGroup", roomId).catch(function (err) {
+        return console.error(err.toString());
+    });
+}).catch(function (err) {
+    return console.error(err.toString());
+});
+
+
+connection.on("chat", function (userName, message, date, userId) {
+    appendLine(userName, message, date, userId === currentUserId);
+    Scrolldown();
+});
+
+function appendLine(userName, message, date, sender) {
+    var appendHtml = '<div class="row"><div class="col-12 px-4 pt-2">' +
+        '<div class="float-left">' +
+        '<div class="message">' +
+        '<span class="badge badge-pill badge-light float-left">'+userName+':</span>' +
+        '<br>'+message+'</div><div class="message-date">'+date+'</div>' +
+        '</div>' +
+        '</div></div>';
+    var appendHtmlSender = '<div class="row"><div class="col-12 px-4 pt-2">' +
+        '<div class="float-right">' +
+        '<div class="message message-sender">' +
+        '<span class="badge badge-pill badge-light float-left">'+userName+':</span>' +
+        '<br>'+message+'</div><div class="message-date">'+date+'</div>' +
+        '</div>' +
+        '</div></div>';
+    if(sender){
+        $('#messages').append(appendHtmlSender);
+    }else{
+        $('#messages').append(appendHtml);
+    }
+};
+
+document.getElementById("sendButton").addEventListener("click", function (event) {
+    var message = document.getElementById("messageText").value;
+    document.getElementById("messageText").value = '';
+    $('#sendButton').attr('disabled',true);
+    connection.invoke("SendMessage", roomId, message).catch(function (err) {
+        return console.error(err.toString());
+    });
+    event.preventDefault();
+});
 </script>
