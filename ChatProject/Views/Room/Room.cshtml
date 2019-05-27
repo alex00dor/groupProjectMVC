@@ -19,7 +19,7 @@
                 <a asp-controller="Room" asp-action="Leave" asp-route-roomId="@Model.Room.Id" class="btn-danger btn">Leave</a>
             </div>
         </div>
-        <div class="pt-5 message-box" id="messages">
+        <div class="pt-3 message-box" id="messages">
             @foreach (Message msg in Model.Room.Messages)
             {
                 <div class="row">

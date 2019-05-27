@@ -6,7 +6,7 @@
     </div>
     <ul class="list-group list-group-flush">
         <li class="list-group-item">Users in the room: @Model.RoomUsers.Count</li>
-        <li class="list-group-item">
+        <li class="list-group-item d-inline-flex justify-content-end align-items-end">
             <a asp-controller="Room" asp-action="Enter" asp-route-roomId="@Model.Id" class="btn btn-outline-success float-right">Go to chat</a>
         </li>
     </ul>

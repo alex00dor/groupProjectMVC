@@ -7,7 +7,9 @@
             <div class="input-group input-group-lg text-center">
                 <label class="sr-only" for="searchInput">Search</label>
                 <input id="searchInput" name="text" type="text" class="form-control message-input px-5" placeholder="Search...">
-                <button id="sendButton" type="submit" class="btn btn-info message-input-btn"><i class="fa fa-search"></i></button>
+                <button id="sendButton" type="submit" class="btn btn-info message-input-btn">
+                    <i class="fa fa-search"></i>
+                </button>
             </div>
         </div>
     </div>
@@ -19,7 +21,7 @@
     }
 </div>
 
-<div page-model="@Model.PagingInfo" page-action="index" page-classes-enabled="true"
-     page-class="btn" page-class-normal="btn-secondary"
-     page-class-selected="btn-primary" class="btn-group pull-right p-3 mb-5">
-</div>
+<ul page-model="@Model.PagingInfo" page-action="index" page-previous-next = "true"
+    page-class-link="page-link" page-class-normal="page-item" 
+    page-class-selected="page-item active" page-class-disabled="page-item disabled" class="pagination mb-5 px-4">
+</ul>
