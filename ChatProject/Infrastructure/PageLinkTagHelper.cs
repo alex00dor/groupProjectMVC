@@ -17,12 +17,11 @@ namespace ChatProject.Infrastructure
             urlHelperFactory = helperFactory;
         }
 
-        [ViewContext] [HtmlAttributeNotBound] public ViewContext ViewContext { get; set; }
-
+        [ViewContext] 
+        [HtmlAttributeNotBound] 
+        public ViewContext ViewContext { get; set; }
         public PagingInfo PageModel { get; set; }
-
         public string PageAction { get; set; }
-
         public bool PageClassesEnabled { get; set; } = false;
         public string PageClass { get; set; }
         public string PageClassNormal { get; set; }
@@ -31,9 +30,6 @@ namespace ChatProject.Infrastructure
         public override void Process(TagHelperContext context,
             TagHelperOutput output)
         {
-            if (PageModel.TotalPages <= 1)
-                return;
-
             IUrlHelper urlHelper = urlHelperFactory.GetUrlHelper(ViewContext);
             TagBuilder result = new TagBuilder("div");
             for (int i = 1; i <= PageModel.TotalPages; i++)
