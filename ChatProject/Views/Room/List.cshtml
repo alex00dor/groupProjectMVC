@@ -12,7 +12,7 @@
         </div>
     </div>
 </div>
-<div class="d-flex flex-wrap justify-content-start p-3">
+<div class="d-flex flex-wrap justify-content-center p-3">
     @foreach (Room room in Model.Rooms)
     {
         @Html.Partial("RoomSummary", room)
@@ -21,5 +21,5 @@
 
 <ul page-model="@Model.PagingInfo" page-action="List" page-previous-next = "true"
     page-class-link="page-link" page-class-normal="page-item" 
-    page-class-selected="page-item active" page-class-disabled="page-item disabled" class="pagination mb-5 px-4">
+    page-class-selected="page-item active" page-class-disabled="page-item disabled" class="pagination px-4" style="margin-bottom: 70px;">
 </ul>

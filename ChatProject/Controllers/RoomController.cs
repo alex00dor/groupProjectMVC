@@ -16,7 +16,7 @@ namespace ChatProject.Controllers
     {
         private IRoomRepository _repository;
         private UserManager<User> _userManager;
-        private static int PAGE_SIZE = 5;
+        private static int PAGE_SIZE = 10;
 
         public RoomController(IRoomRepository repository, UserManager<User> userManager)
         {

@@ -29,6 +29,10 @@ namespace ChatProject.Infrastructure
         public override void Process(TagHelperContext context,
             TagHelperOutput output)
         {
+            if (PageModel.TotalPages <= 1)
+            {
+                return;
+            }
             IUrlHelper urlHelper = urlHelperFactory.GetUrlHelper(ViewContext);
             TagBuilder result = new TagBuilder("ul");
             if (PagePreviousNext)
