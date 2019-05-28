@@ -1,7 +1,7 @@
 @using ChatProject.Models.Entities
 @model RoomModel
 <div class="row h-100">
-    <nav class="col-md-3 col-lg-4 d-none d-md-block bg-light shadow-sm sidebar">
+    <nav class="col-md-3 d-none d-md-block bg-light shadow-sm sidebar">
         <div class="sidebar-sticky">
             <div class="btn-group-vertical btn-sidebar-group" role="group">
                 @foreach (Room room in Model.UserRooms)
@@ -13,7 +13,7 @@
         </div>
 
     </nav>
-    <div class="col-md-9 ml-sm-auto col-lg-8 content pt-0">
+    <div class="col-md-9 ml-sm-auto content pt-0">
         <div class="card shadow message-header">
             <div class="card-body d-flex flex-row justify-content-between pb-3">
                 <h3>@Model.Room.Name</h3>
@@ -55,9 +55,13 @@
 </div>
 
 <script>
-function Scrolldown() {
-   // window.scrollTo(0, document.body.scrollHeight);
-    document.getElementById("messages").scrollTo(0, document.getElementById("messages").scrollHeight);
+    function Scrolldown() {
+        try {
+            document.getElementById("messages").scrollTo(0, document.getElementById("messages").scrollHeight);
+        } catch (e) {
+            var scroll=$('#messages');
+             scroll.animate({scrollTop: scroll.prop("scrollHeight")});
+        }
 }
 
 Scrolldown();
