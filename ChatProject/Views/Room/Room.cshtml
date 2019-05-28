@@ -1,12 +1,11 @@
-@using ChatProject.Models.Entities
 @model RoomModel
 <div class="row h-100">
     <nav class="col-md-3 d-none d-md-block bg-light shadow-sm sidebar">
         <div class="sidebar-sticky">
             <div class="btn-group-vertical btn-sidebar-group" role="group">
-                @foreach (Room room in Model.UserRooms)
+                @foreach (var room in Model.UserRooms)
                 {
-                    <a asp-action="Room" asp-route-roomId="@room.Id" class="btn @((room.Id == Model.Room.Id) ? "btn-primary" : "btn-secondary") btn-sidebar shadow">@room.Name</a>
+                    <a asp-action="Room" asp-route-roomId="@room.Id" class="btn @(room.Id == Model.Room.Id ? "btn-primary" : "btn-secondary") btn-sidebar shadow">@room.Name</a>
                 }
 
             </div>
@@ -22,12 +21,12 @@
         </div>
         <div class="message-box">
             <div class="message-box-sticky" id="messages">
-                @foreach (Message msg in Model.Room.Messages)
+                @foreach (var msg in Model.Room.Messages)
                 {
                     <div class="row">
                         <div class="col-12 px-4 pt-2">
-                            <div class="@((msg.UserId == Model.CurrentUserId) ? "float-right" : "float-left")">
-                                <div class="message @((msg.UserId == Model.CurrentUserId) ? "message-sender" : "")">
+                            <div class="@(msg.UserId == Model.CurrentUserId ? "float-right" : "float-left")">
+                                <div class="message @(msg.UserId == Model.CurrentUserId ? "message-sender" : "")">
                                     <span class="badge badge-pill badge-light float-left">@msg.User.UserName:</span><br>
                                     @msg.Text
                                 </div>
@@ -127,3 +126,4 @@ document.getElementById("sendButton").addEventListener("click", function (event)
     event.preventDefault();
 });
 </script>
+
