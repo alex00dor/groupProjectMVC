@@ -8,34 +8,55 @@ body, html {
 
 .footer {
     background-color: #f5f5f5;
+    z-index: 10;
 }
-
-
 .sidebar {
     position: fixed;
     top: 0;
     bottom: 0;
     left: 0;
     margin: 0;
-    padding: 48px 0 56px;
-    overflow-y: scroll;
+    padding: 0;
+}
+
+.sidebar-sticky {
+    position: relative;
+    top: 0;
+    height: calc(100vh - 112px);
+    margin-top: 54px;
+    padding: 0;
+    overflow-x: hidden;
+    overflow-y: auto; 
 }
 
 .message-header {
+    position: absolute;
     z-index: 5;
-    top: 48px;
+    top: 0;
+    right: 0;
+    left: 0;
 }
 
 .message-box {
-    height: 100%;
-    overflow-x: hidden;
-    overflow-y: scroll;
+    position: absolute;
+    top:0;
+    bottom: 0;
+    right: 0;
+    left: 0;
     padding-right: 15px;
     padding-left: 15px;
     margin-right: auto;
     margin-left: auto;
-    margin-bottom: -72px;
-    padding-bottom: 90px;
+    z-index: 4;
+}
+
+.message-box-sticky {
+    position: relative;
+    top: 0;
+    height: calc(100vh - 230px);
+    margin-top: 79px;
+    overflow-x: hidden;
+    overflow-y: auto;
 }
 
 .message {
@@ -52,16 +73,20 @@ body, html {
 .message-date {
     color: gray;
     font-size: x-small;
-    margin: 0;
+    margin-bottom: 10px;
     padding: 0;
     float: right;
+    
 }
 
 .message-input-box {
-    background-color: white;
-    z-index: 5;
+    position: absolute;
     bottom: 56px;
+    left: 0;
+    right: 0;
+    background-color: white;
     border-radius: 0;
+    z-index: 5;
 }
 
 .message-input{
