@@ -1,13 +1,24 @@
+@using ChatProject.Models.Entities
 @model ChatProject.Models.Entities.Room
 
 <div class="card m-2 shadow" style="width: 18rem;">
     <div class="card-header">
         @Model.Name
     </div>
-    <ul class="list-group list-group-flush">
-        <li class="list-group-item">Users in the room: @Model.RoomUsers.Count</li>
-        <li class="list-group-item d-inline-flex justify-content-end align-items-end">
-            <a asp-controller="Room" asp-action="Enter" asp-route-roomId="@Model.Id" class="btn btn-outline-success float-right">Go to chat</a>
-        </li>
-    </ul>
+    <div class="card-body p-0 m-0">
+        <ul class="list-group list-group-flush">
+            <li class="list-group-item">Users in the room: @Model.RoomUsers.Count</li>
+            <li class="list-group-item">@Model.Description</li>
+        </ul>
+    </div>
+    <div class="card-footer text-right">
+        @foreach (RoomUser roomUser in Model.RoomUsers)
+        {
+            if (roomUser.User.UserName == User.Identity.Name)
+            {
+                <a asp-controller="Room" asp-action="Leave" asp-route-roomId="@Model.Id" class="btn btn-outline-danger">Leave</a>
+            }
+        }
+       <a asp-controller="Room" asp-action="Enter" asp-route-roomId="@Model.Id" class="btn btn-outline-success">Go to chat</a>
+    </div>
 </div>

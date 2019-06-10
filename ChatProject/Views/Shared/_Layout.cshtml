@@ -15,6 +15,7 @@
     <title>Real-time chat</title>
 </head>
 <body>
+
 <header>
     <!-- Fixed navbar -->
     <nav class="navbar navbar-expand-md navbar-dark fixed-top bg-dark shadow py-lg-2 py-md-0">
@@ -28,10 +29,10 @@
                 @if (User.Identity.IsAuthenticated)
                 {
                     <li class="nav-item">
-                        <a class="nav-link" asp-controller="Room" asp-action="Index">Show all rooms</a>
+                        <a class="nav-link" asp-controller="Room" asp-action="List">Show all rooms</a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link" asp-controller="Room" asp-action="List">Show my rooms</a>
+                        <a class="nav-link" asp-controller="Room" asp-action="MyRooms">Show my rooms</a>
                     </li>
                     <li class="nav-item">
                         <a class="nav-link" asp-controller="Room" asp-action="Create">Create a new room</a>

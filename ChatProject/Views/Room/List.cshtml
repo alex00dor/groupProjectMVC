@@ -4,22 +4,51 @@
 <div class="position-sticky container-fluid px-0" style="top:54px; right: 0; left: 0; z-index:100;">
     <div class="row">
         <div class="col-12 p-0">
-            <div class="input-group input-group-lg text-center">
-                <label class="sr-only" for="searchInput">Search</label>
-                <input id="searchInput" name="Search" type="text" class="form-control message-input px-5" placeholder="Search...">
-                <button id="sendButton" type="submit" class="btn btn-info message-input-btn"><i class="fa fa-search"></i></button>
-            </div>
+            <form method="get">
+                <div class="input-group input-group-lg text-center">
+                    <label class="sr-only" for="searchInput">Search</label>
+                    <input asp-for="SearchRequest" id="searchInput" name="q" type="text" class="form-control message-input px-5" placeholder="Search...">
+                    <button id="sendButton" type="submit" class="btn btn-info message-input-btn">
+                        <i class="fa fa-search"></i>
+                    </button>
+                </div>
+            </form>
         </div>
     </div>
 </div>
-<div class="d-flex flex-wrap justify-content-center p-3">
-    @foreach (Room room in Model.Rooms)
+<h3 class="pt-3 px-3">
+    @if (Model.SearchRequest != "")
     {
-        @Html.Partial("RoomSummary", room)
+        @:Search result:
     }
-</div>
+    else
+    {
+        @:All available rooms:
+    }
+</h3>
+@if (Model.Rooms.Count() == 0 && Model.SearchRequest == "")
+{
+    <div class="p-5 w-100 text-center" style="color:#b9bbbe">
+        Nothing here yet!
+    </div>
+}
+else if(Model.SearchRequest != "" && Model.Rooms.Count() == 0)
+{
+    <div class="alert alert-danger">
+        Sorry but nothing found.
+    </div>
+}
+else
+{
+    <div class="d-flex flex-wrap justify-content-center p-3">
+        @foreach (Room room in Model.Rooms)
+        {
+            @Html.Partial("RoomSummary", room)
+        }
+    </div>
+}
 
-<ul page-model="@Model.PagingInfo" page-action="List" page-previous-next = "true"
-    page-class-link="page-link" page-class-normal="page-item" 
-    page-class-selected="page-item active" page-class-disabled="page-item disabled" class="pagination px-4" style="margin-bottom: 70px;">
+<ul page-model="@Model.PagingInfo" page-action="List" page-previous-next="true"
+    page-class-link="page-link" page-class-normal="page-item"
+    page-class-selected="page-item active" page-class-disabled="page-item disabled" page-class-search="@Model.SearchRequest" class="pagination px-4" style="margin-bottom: 70px;">
 </ul>

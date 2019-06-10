@@ -45,6 +45,8 @@ namespace ChatProject.Migrations
 
                     b.Property<string>("CreatorId");
 
+                    b.Property<string>("Description");
+
                     b.Property<string>("Name");
 
                     b.Property<bool>("Private");

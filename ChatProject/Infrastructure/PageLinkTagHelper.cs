@@ -25,6 +25,7 @@ namespace ChatProject.Infrastructure
         public string PageClassNormal { get; set; }
         public string PageClassSelected { get; set; }
         public string PageClassDisabled { get; set; }
+        public string PageClassSearch { get; set; }
 
         public override void Process(TagHelperContext context,
             TagHelperOutput output)
@@ -44,7 +45,7 @@ namespace ChatProject.Infrastructure
                 if (prev > 0)
                 {
                     tag = new TagBuilder("a");
-                    tag.Attributes["href"] = urlHelper.Action(PageAction, new {page = prev});
+                    tag.Attributes["href"] = urlHelper.Action(PageAction, new {page = prev, q = PageClassSearch});
                 }
                 tag.AddCssClass(PageClassLink);
                 tag.InnerHtml.Append("Previous");
@@ -60,7 +61,7 @@ namespace ChatProject.Infrastructure
                 if (i != PageModel.CurrentPage)
                 {
                     tag = new TagBuilder("a");
-                    tag.Attributes["href"] =  urlHelper.Action(PageAction, new {page = i});
+                    tag.Attributes["href"] =  urlHelper.Action(PageAction, new {page = i, q = PageClassSearch});
                 }
                 tag.AddCssClass(PageClassLink);
                 tag.InnerHtml.Append(i.ToString());
@@ -77,7 +78,7 @@ namespace ChatProject.Infrastructure
                 if (next <= PageModel.TotalPages)
                 {
                     tag = new TagBuilder("a");
-                    tag.Attributes["href"] = urlHelper.Action(PageAction, new {page = next});
+                    tag.Attributes["href"] = urlHelper.Action(PageAction, new {page = next, q = PageClassSearch});
                 }
                 tag.AddCssClass(PageClassLink);
                 tag.InnerHtml.Append("Next");

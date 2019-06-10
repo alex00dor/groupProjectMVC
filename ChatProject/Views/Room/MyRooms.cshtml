@@ -1,0 +1,24 @@
+@using ChatProject.Models.Entities
+@model RoomsListModel
+
+<h3 class="pt-4 px-3">Your rooms:</h3>
+@if (Model.Rooms.Count() == 0)
+{
+    <div class="p-5 w-100 text-center" style="color:#b9bbbe">
+        Nothing here yet!
+    </div>
+}
+else
+{
+    <div class="d-flex flex-wrap justify-content-center p-3">
+        @foreach (Room room in Model.Rooms)
+        {
+            @Html.Partial("RoomSummary", room)
+        }
+    </div>
+}
+
+<ul page-model="@Model.PagingInfo" page-action="MyRooms" page-previous-next="true"
+    page-class-link="page-link" page-class-normal="page-item"
+    page-class-selected="page-item active" page-class-disabled="page-item disabled" class="pagination px-4" style="margin-bottom: 70px;">
+</ul>

@@ -1,4 +1,5 @@
 using System;
+using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using ChatProject.Models.Repositories;
@@ -7,6 +8,7 @@ using ChatProject.Models.Entities;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Routing.Patterns;
 
 namespace ChatProject.Controllers
 {
@@ -25,20 +27,30 @@ namespace ChatProject.Controllers
         }
 
         [Route("")]
-        [Route("Index")]
-        public IActionResult Index(int page = 1)
+        [Route("List")]
+        public IActionResult List(int page = 1, string q = "")
         {
+            if (q == null)
+            {
+                q = "";
+            }
+
+            q = q.Trim();
+            IQueryable<Room> rooms = q != ""
+                ? _repository.Rooms
+                    .Where(r => r.Name.ToLower().Contains(q.ToLower()) || r.Description.ToLower().Contains(q.ToLower()))
+                    .OrderByDescending(r => r.RoomUsers.Count)
+                : _repository.Rooms
+                    .OrderByDescending(r => r.RoomUsers.Count);
             return View(new RoomsListModel
             {
-                Rooms = _repository.Rooms
-                    .OrderBy(r => r.Name)
-                    .Skip((page - 1) * PAGE_SIZE)
-                    .Take(PAGE_SIZE),
+                Rooms = rooms.Skip((page - 1) * PAGE_SIZE).Take(PAGE_SIZE),
+                SearchRequest = q,
                 PagingInfo = new PagingInfo
                 {
                     CurrentPage = page,
                     ItemsPerPage = PAGE_SIZE,
-                    TotalItems = _repository.Rooms.Count()
+                    TotalItems = rooms.Count()
                 }
             });
         }
@@ -77,12 +89,12 @@ namespace ChatProject.Controllers
             if (user == null)
                 return Redirect("/Error");
             _repository.RemoveUserFromRoom(roomId, user);
-            return RedirectToAction("List");
+            return RedirectToAction("MyRooms");
         }
 
 
-        [Route("List")]
-        public async Task<IActionResult> List(int page = 1)
+        [Route("MyRooms")]
+        public async Task<IActionResult> MyRooms(int page = 1)
         {
             User user = await CurrentUser;
 
@@ -123,11 +135,12 @@ namespace ChatProject.Controllers
                     Room room = new Room
                     {
                         Name = model.Name,
+                        Description = model.Description,
                         Creator = user,
                         Private = false
                     };
                     _repository.CreateRoom(room, user);
-                    return RedirectToAction("Index");
+                    return RedirectToAction("List");
                 }
 
                 ModelState.AddModelError("notUniq", "Room with this name already exist.");
