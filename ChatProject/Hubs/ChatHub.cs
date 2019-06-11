@@ -13,36 +13,29 @@ namespace ChatProject.Hubs
     {
         private IRoomRepository _repository;
         private UserManager<User> _userManager;
-
-        private Hashtable userGroups = new Hashtable();
+        
 
         public ChatHub(IRoomRepository repository, UserManager<User> userManager)
         {
             _repository = repository;
             _userManager = userManager;
         }
-        
-        public async Task JoinGroup(int roomId)
+        public override Task OnConnectedAsync()
         {
-            User user = await CurrentUser;
-            if (_repository.isUserInRoom(roomId, user.Id))
+            User user = CurrentUser.Result;
+            foreach (var room in _repository.GetAllRoomsByUser(user))
             {
-                await Groups.AddToGroupAsync(Context.ConnectionId, roomId.ToString());
-                userGroups.Add(Context.ConnectionId, roomId);
+                Groups.AddToGroupAsync(Context.ConnectionId, room.Id.ToString());
             }
-        }
-
-        public async Task LeaveGroup(int roomId)
-        {
-            await Groups.RemoveFromGroupAsync(Context.ConnectionId, roomId.ToString());
+            return base.OnConnectedAsync();
         }
 
         public override Task OnDisconnectedAsync(Exception exception)
         {
-            if (userGroups.ContainsKey(Context.ConnectionId))
+            User user = CurrentUser.Result;
+            foreach (var room in _repository.GetAllRoomsByUser(user))
             {
-                LeaveGroup((int) userGroups[Context.ConnectionId]);
-                userGroups.Remove(Context.ConnectionId);
+                Groups.RemoveFromGroupAsync(Context.ConnectionId, room.Id.ToString());
             }
             return base.OnDisconnectedAsync(exception);
         }
@@ -63,7 +56,7 @@ namespace ChatProject.Hubs
 
                 _repository.SendMessageToRoom(roomId, user, message);
                 await Clients.Groups(roomId.ToString())
-                    .SendAsync("chat", message.User.UserName, message.Text, message.DateTime.ToString(), user.Id);
+                    .SendAsync("chat", message.User.UserName, message.Text, message.DateTime.ToString(),message.Room.Id.ToString(), message.Room.Name);
             }
         }
         

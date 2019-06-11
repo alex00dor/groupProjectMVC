@@ -8,9 +8,10 @@ body, html {
 
 .footer {
     background-color: #f5f5f5;
-    z-index: 10;
+    z-index: 105;
 }
 .sidebar {
+    z-index: 102;
     position: fixed;
     top: 0;
     bottom: 0;
@@ -86,7 +87,7 @@ body, html {
     right: 0;
     background-color: white;
     border-radius: 0;
-    z-index: 5;
+    z-index: 104;
 }
 
 .message-input{

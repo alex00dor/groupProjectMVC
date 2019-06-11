@@ -6,15 +6,24 @@
     <link rel="stylesheet" asp-href-include="/lib/bootstrap/dist/**/*.min.css"
           asp-href-exclude="**/*-reboot*,**/*-gird"/>
     <link rel="stylesheet" asp-href-include="/css/*.css"/>
-    <link rel="stylesheet" href="/lib/fontawesome/css/all.css" />
+    <link rel="stylesheet" href="/lib/fontawesome/css/all.css"/>
     <script src="/lib/jquery/dist/jquery.min.js"></script>
     <script src="/lib/jquery-validation/dist/jquery.validate.min.js"></script>
     <script src="/lib/jquery-validation-unobtrusive/jquery.validate.unobtrusive.min.js"></script>
     <script src="/lib/bootstrap/dist/js/bootstrap.min.js"></script>
     <script src="/js/signalr.min.js"></script>
+    <script>
+        var currentUserName = '@User.Identity.Name';
+        var currentRoomId = null;
+    </script>
     <title>Real-time chat</title>
 </head>
 <body>
+<div class="position-fixed d-flex mt-3 flex-column pt-5 px-3" style="z-index: 101; right: 0; top: 0;">
+    <div id="notifications" class="position-relative" style="max-height: calc(100vh - 112px); overflow-y: hidden;">
+
+    </div>
+</div>
 <header>
     <!-- Fixed navbar -->
     <nav class="navbar navbar-expand-md navbar-dark fixed-top bg-dark shadow py-lg-2 py-md-0">
@@ -62,6 +71,6 @@
         <span class="text-muted">MVC Project at RTC 2019</span>
     </div>
 </footer>
-
+<script src="/js/chat.js"></script>
 </body>
 </html>
