@@ -7,7 +7,6 @@ var connection = new signalR.HubConnectionBuilder().withUrl("/chatHub").build();
 connection.start();
 
 connection.on("chat", function (userName, message, date, roomId, roomName) {
-    console.log(userName, message, date, roomId, roomName);
     if(currentRoomId != null && currentRoomId === roomId){
         showMessageInRoom(userName, message, date, currentUserName === userName);
         var scroll=$('#messages');
