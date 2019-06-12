@@ -38,7 +38,7 @@ namespace ChatProject.Hubs
         {
             User user = CurrentUser.Result;
             if (user == null)
-                return base.OnConnectedAsync();
+                return base.OnDisconnectedAsync(exception);
 
             foreach (var room in _repository.GetAllRoomsByUser(user))
             {
