@@ -14,7 +14,7 @@
     <div class="card-footer text-right">
         @foreach (RoomUser roomUser in Model.RoomUsers)
         {
-            if (roomUser.User.UserName == User.Identity.Name)
+            if (roomUser.User != null && roomUser.User.UserName == User.Identity.Name)
             {
                 <a asp-controller="Room" asp-action="Leave" asp-route-roomId="@Model.Id" class="btn btn-outline-danger">Leave</a>
             }

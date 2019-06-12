@@ -102,7 +102,7 @@ namespace ChatProject.Controllers
                 {
                     Rooms = _repository
                         .GetAllRoomsByUser(user)
-                        .OrderBy(r => r.Name)
+                        .OrderByDescending(r => r.RoomUsers.Count)
                         .Skip((page - 1) * PAGE_SIZE)
                         .Take(PAGE_SIZE),
                     PagingInfo = new PagingInfo
