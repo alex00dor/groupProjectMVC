@@ -125,6 +125,8 @@ namespace ChatProject.Controllers
         public async Task<IActionResult> Create(CreateRoomModel model)
         {
             User user = await CurrentUser;
+            if (user == null)
+                return Redirect("/Error");
             if (ModelState.IsValid && user != null)
             {
                 if (_repository.isNameUniq(model.Name))

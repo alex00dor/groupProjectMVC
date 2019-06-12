@@ -23,6 +23,10 @@ namespace ChatProject.Hubs
         public override Task OnConnectedAsync()
         {
             User user = CurrentUser.Result;
+
+            if (user == null)
+                return base.OnConnectedAsync();
+
             foreach (var room in _repository.GetAllRoomsByUser(user))
             {
                 Groups.AddToGroupAsync(Context.ConnectionId, room.Id.ToString());
@@ -33,6 +37,9 @@ namespace ChatProject.Hubs
         public override Task OnDisconnectedAsync(Exception exception)
         {
             User user = CurrentUser.Result;
+            if (user == null)
+                return base.OnConnectedAsync();
+
             foreach (var room in _repository.GetAllRoomsByUser(user))
             {
                 Groups.RemoveFromGroupAsync(Context.ConnectionId, room.Id.ToString());
