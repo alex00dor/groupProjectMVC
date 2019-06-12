@@ -33,7 +33,7 @@ namespace ChatProject.Models.Repositories
             return null;
         }
 
-        public void CreateRoom(Room room, User user)
+        public int CreateRoom(Room room, User user)
         {
             room.RoomUsers = new List<RoomUser>
             {
@@ -45,6 +45,8 @@ namespace ChatProject.Models.Repositories
             };
             _context.Rooms.Add(room);
             _context.SaveChanges();
+
+            return room.Id;
         }
 
         public void RemoveUserFromRoom(int roomId, User user)

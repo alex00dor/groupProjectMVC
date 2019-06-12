@@ -136,8 +136,8 @@ namespace ChatProject.Controllers
                         Creator = user,
                         Private = false
                     };
-                    _repository.CreateRoom(room, user);
-                    return RedirectToAction("List");
+                    int roomId = _repository.CreateRoom(room, user);
+                    return RedirectToAction("Room", new {roomId});
                 }
 
                 ModelState.AddModelError("notUniq", "Room with this name already exist.");
@@ -145,21 +145,7 @@ namespace ChatProject.Controllers
 
             return View(model);
         }
-
-        //TODO Create chat person to person
-//        [HttpPost("Room/Create/Private")]
-//        public async Task<IActionResult> CreatePrivate(string user)
-//        {
-//            User currentUser = await CurrentUser;
-//            
-//        }
-
-        [Route("Room/Create/Success")]
-        public IActionResult CreateSuccess()
-        {
-            return View();
-        }
-
+        
         private Task<User> CurrentUser =>
             _userManager.FindByNameAsync(HttpContext.User.Identity.Name);
     }

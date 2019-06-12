@@ -7,7 +7,7 @@ namespace ChatProject.Models.Repositories
     {
         IQueryable<Room> Rooms { get; }
         Room GetRoom(int roomId, User user);
-        void CreateRoom(Room room, User user);
+        int CreateRoom(Room room, User user);
         void DeleteRoom(int roomId, User user);
         void RemoveUserFromRoom(int roomId, User user);
         void SendMessageToRoom(int roomId, User user, Message message);
