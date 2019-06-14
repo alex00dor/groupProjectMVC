@@ -21,56 +21,27 @@
 <body>
 <div class="position-fixed d-flex mt-3 flex-column pt-5 px-3" style="z-index: 101; right: 0; top: 0;">
     <div id="notifications" class="position-relative" style="max-height: calc(100vh - 112px); overflow-y: hidden;">
-
     </div>
 </div>
-<header>
-    <!-- Fixed navbar -->
-    <nav class="navbar navbar-expand-md navbar-dark fixed-top bg-dark shadow py-lg-2 py-md-0">
-        <a class="navbar-brand" href="#">Chat</a>
-        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent"
-                aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
-            <span class="navbar-toggler-icon"></span>
-        </button>
-        <div class="collapse navbar-collapse justify-content-end" id="navbarSupportedContent">
-            <ul class="navbar-nav">
-                @if (User.Identity.IsAuthenticated)
-                {
-                    <li class="nav-item">
-                        <a class="nav-link" asp-controller="Room" asp-action="List">Show all rooms</a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link" asp-controller="Room" asp-action="MyRooms">Show my rooms</a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link" asp-controller="Room" asp-action="Create">Create a new room</a>
-                    </li>
-                }
-            </ul>
-            <div class="d-inline-block my-2 my-lg-0">
-                @if (User.Identity.IsAuthenticated)
-                {
-                    <a asp-controller="Account" asp-action="Logout" class="btn btn-outline-primary my-2 my-sm-0">Sign out</a>
-                }
-                else
-                {
-                    <a asp-controller="Account" asp-action="Login" class="btn btn-outline-primary my-2 my-sm-0">Sign in</a>
-                    <a asp-controller="Account" asp-action="Create" class="btn btn-outline-primary my-2 my-sm-0">Sign up</a>
-                }
-            </div>
-        </div>
-
-    </nav>
-</header>
+@if (IsSectionDefined("Header"))
+{
+    @RenderSection("Header")
+}
+else
+{
+    @Html.Partial("_Header")
+}
 <div class="container-fluid pt-5 h-100">
     @RenderBody()
 </div>
-
-<footer class="footer mt-auto py-3 fixed-bottom shadow">
-    <div class="container">
-        <span class="text-muted">MVC Project at RTC 2019</span>
-    </div>
-</footer>
+@if (IsSectionDefined("Footer"))
+{
+    @RenderSection("Footer")
+}
+else
+{
+    @Html.Partial("_Footer")
+}
 <script src="/js/chat.js"></script>
 </body>
 </html>
