@@ -63,7 +63,7 @@ namespace ChatProject.Hubs
 
                 _repository.SendMessageToRoom(roomId, user, message);
                 await Clients.Groups(roomId.ToString())
-                    .SendAsync("chat", message.User.UserName, message.Text, message.DateTime.ToString(),message.Room.Id.ToString(), message.Room.Name);
+                    .SendAsync("chat", message.User.UserName, message.Text, message.DateTime.ToString(), message.Room.Id.ToString(), message.Room.Name);
             }
         }
         

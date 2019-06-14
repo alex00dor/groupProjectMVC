@@ -37,7 +37,7 @@ namespace ChatProject.Controllers
                 IdentityResult result = await _userManager.CreateAsync(user, model.Password);
                 if (result.Succeeded)
                 {
-                    return RedirectToAction("Login");
+                    return Login(new LoginModel {Email = model.Email, Password = model.Password}, null).Result;
                 }
 
                 foreach (IdentityError error in result.Errors)
