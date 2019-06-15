@@ -3,10 +3,10 @@
 <div class="card shadow mt-5 mx-5">
     <div class="card-header"><h4>Create a new room</h4></div>
     <div class="card-body">
-        <form asp-action="Create" method="post">
+        <form autocomplete="off" asp-action="Create" method="post">
             <div class="form-group">
                 <label asp-for="Name"></label>
-                <input asp-for="Name" class="form-control" />
+                <input autocomplete="off" asp-for="Name" class="form-control" />
             </div>
             <div class="form-group">
                 <label asp-for="Description"></label>

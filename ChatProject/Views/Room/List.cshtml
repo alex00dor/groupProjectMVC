@@ -4,10 +4,10 @@
 <div class="position-sticky container-fluid px-0" style="top:54px; right: 0; left: 0; z-index:100;">
     <div class="row">
         <div class="col-12 p-0">
-            <form method="get">
+            <form method="get" autocomplete="off">
                 <div class="input-group input-group-lg text-center">
                     <label class="sr-only" for="searchInput">Search</label>
-                    <input asp-for="SearchRequest" id="searchInput" name="q" type="text" class="form-control message-input px-5" placeholder="Search...">
+                    <input autocomplete="off" asp-for="SearchRequest" id="searchInput" name="q" type="text" class="form-control message-input px-5" placeholder="Search...">
                     <button id="sendButton" type="submit" class="btn btn-info message-input-btn">
                         <i class="fa fa-search"></i>
                     </button>
