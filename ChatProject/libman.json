@@ -1,0 +1,28 @@
+{
+  "version": "1.0",
+  "defaultProvider": "cdnjs",
+  "defaultDestination": "wwwroot/lib",
+  "libraries": [
+    {
+      "library": "font-awesome@5.8.2",
+      "destination": "wwwroot/lib/fontawesome"
+    },
+    {
+      "library": "jquery@3.4.1",
+      "destination": "wwwroot/lib/jquery"
+    },
+    {
+      "library": "jquery-validate@1.19.1",
+      "destination": "wwwroot/lib/jquery-validate"
+    },
+    {
+      "library": "jquery-validation-unobtrusive@3.2.11",
+      "destination": "wwwroot/lib/jquery-validation-unobtrusive"
+    },
+    {
+      "provider": "unpkg",
+      "library": "bootstrap@4.3.1",
+      "destination": "wwwroot/lib/bootstrap"
+    }
+  ]
+}
